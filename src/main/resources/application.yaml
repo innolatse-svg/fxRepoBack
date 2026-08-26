@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: forexIntel
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME:forex_intel_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres_dev_secret}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: ${REDIS_PASSWORD:redis_dev_secret}
+
+jwt:
+  secret: ${JWT_SECRET:votre_cle_secrete_jwt_hmac_256_bits_minimale_pour_le_dev_qui_doit_etre_longue}
+  expiration: ${JWT_EXPIRATION_MS:900000}
+  refresh-expiration: ${JWT_REFRESH_EXPIRATION_MS:604800000}
