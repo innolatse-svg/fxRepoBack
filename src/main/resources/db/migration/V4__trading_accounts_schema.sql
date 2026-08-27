@@ -1,0 +1,26 @@
+CREATE SCHEMA IF NOT EXISTS execution;
+
+CREATE TABLE IF NOT EXISTS execution.trading_accounts (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES iam.users(id) ON DELETE CASCADE,
+    broker_name VARCHAR(100) NOT NULL,
+    server_name VARCHAR(100) NOT NULL,
+    account_login VARCHAR(100) NOT NULL,
+    environment VARCHAR(20) NOT NULL DEFAULT 'DEMO',
+    balance DOUBLE PRECISION DEFAULT 10000.0,
+    equity DOUBLE PRECISION DEFAULT 10000.0,
+    currency VARCHAR(10) DEFAULT 'USD',
+    leverage VARCHAR(20) DEFAULT '1:100',
+    is_connected BOOLEAN DEFAULT TRUE,
+    auto_trading_enabled BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS execution.account_credentials (
+    account_id UUID PRIMARY KEY REFERENCES execution.trading_accounts(id) ON DELETE CASCADE,
+    encrypted_password TEXT NOT NULL,
+    iv_base64 VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

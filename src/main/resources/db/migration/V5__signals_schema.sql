@@ -1,0 +1,17 @@
+CREATE SCHEMA IF NOT EXISTS intelligence;
+
+CREATE TABLE IF NOT EXISTS intelligence.trade_signals (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    symbol VARCHAR(20) NOT NULL,
+    direction VARCHAR(10) NOT NULL,
+    timeframe VARCHAR(10) NOT NULL DEFAULT 'H1',
+    alignment_score INTEGER NOT NULL,
+    entry_price DOUBLE PRECISION NOT NULL,
+    stop_loss DOUBLE PRECISION NOT NULL,
+    take_profit DOUBLE PRECISION NOT NULL,
+    risk_reward_ratio VARCHAR(20) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING_CONFIRMATION',
+    confluence_data JSONB NOT NULL DEFAULT '{}',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
